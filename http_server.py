@@ -1,6 +1,7 @@
 import socket
 import sys
 
+CRLF = '\r\n'
 
 def response_ok():
     """returns a basic HTTP response"""
@@ -9,7 +10,7 @@ def response_ok():
     resp.append("Content-Type: text/plain")
     resp.append("")
     resp.append("this is a pretty minimal response")
-    return "\r\n".join(resp)
+    return CRLF.join(resp)
 
 
 def response_method_not_allowed():
@@ -17,11 +18,11 @@ def response_method_not_allowed():
     resp = []
     resp.append("HTTP/1.1 405 Method Not Allowed")
     resp.append("")
-    return "\r\n".join(resp)
+    return CRLF.join(resp)
 
 
 def parse_request(request):
-    first_line = request.split("\r\n", 1)[0]
+    first_line = request.split(CRLF, 1)[0]
     method, uri, protocol = first_line.split()
     if method != "GET":
         raise NotImplementedError("We only accept GET")
